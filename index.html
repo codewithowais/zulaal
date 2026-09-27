@@ -1,0 +1,2548 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZULAAL — Pure Water Pakistan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syne:wght@300;400;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      :root {
+        --void: #020509;
+        --deep: #030c18;
+        --water: #0a3d6b;
+        --mid: #0e6aad;
+        --shine: #14a8e0;
+        --foam: #c8eaf9;
+        --ice: #e8f6ff;
+        --gold: #b8924a;
+        --goldlt: #d4aa6a;
+        --serif: "Cormorant", Georgia, serif;
+        --sans: "Syne", sans-serif;
+      }
+      html {
+        font-size: 16px;
+        scroll-behavior: smooth;
+      }
+      body {
+        background: var(--void);
+        color: var(--ice);
+        font-family: var(--sans);
+        overflow-x: hidden;
+        cursor: none;
+      }
+      ::-webkit-scrollbar {
+        width: 3px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--void);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--shine);
+      }
+      #c1 {
+        position: fixed;
+        width: 7px;
+        height: 7px;
+        background: var(--shine);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transform: translate(-50%, -50%);
+        mix-blend-mode: exclusion;
+        transition:
+          width 0.2s,
+          height 0.2s;
+      }
+      #c2 {
+        position: fixed;
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgba(20, 168, 224, 0.45);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transform: translate(-50%, -50%);
+        transition:
+          width 0.3s,
+          height 0.3s,
+          border-color 0.3s;
+      }
+      body.big #c1 {
+        width: 18px;
+        height: 18px;
+      }
+      body.big #c2 {
+        width: 52px;
+        height: 52px;
+        border-color: rgba(20, 168, 224, 0.18);
+      }
+      #loader {
+        position: fixed;
+        inset: 0;
+        background: var(--void);
+        z-index: 10000;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.8rem;
+        transition:
+          opacity 0.9s,
+          visibility 0.9s;
+      }
+      #loader.gone {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+      .ld-logo {
+        font-family: var(--serif);
+        font-size: 3.2rem;
+        font-weight: 300;
+        letter-spacing: 0.35em;
+        color: #fff;
+      }
+      .ld-logo span {
+        color: var(--shine);
+      }
+      .ld-bar {
+        width: 220px;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.07);
+        position: relative;
+        overflow: hidden;
+      }
+      .ld-fill {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to right, transparent, var(--shine));
+        width: 0;
+        transition: width 0.04s linear;
+      }
+      .ld-pct {
+        font-size: 0.6rem;
+        letter-spacing: 0.3em;
+        color: rgba(200, 234, 249, 0.28);
+        text-transform: uppercase;
+      }
+      #cvs {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+      }
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        padding: 2rem 6vw;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.55s;
+      }
+      nav.stuck {
+        background: rgba(2, 5, 9, 0.9);
+        backdrop-filter: blur(30px);
+        padding: 1.1rem 6vw;
+        border-bottom: 1px solid rgba(20, 168, 224, 0.07);
+      }
+      .nlogo {
+        font-family: var(--serif);
+        font-size: 1.55rem;
+        font-weight: 300;
+        letter-spacing: 0.22em;
+        color: #fff;
+        text-decoration: none;
+        text-transform: uppercase;
+      }
+      .nlogo em {
+        color: var(--shine);
+        font-style: normal;
+      }
+      .nlinks {
+        display: flex;
+        gap: 2.8rem;
+        list-style: none;
+      }
+      .nlinks a {
+        font-size: 0.6rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: rgba(200, 234, 249, 0.38);
+        text-decoration: none;
+        transition: color 0.35s;
+      }
+      .nlinks a:hover {
+        color: var(--shine);
+      }
+      .nbtn {
+        border: 1px solid rgba(20, 168, 224, 0.32);
+        color: var(--shine);
+        background: transparent;
+        padding: 0.52rem 1.5rem;
+        font-size: 0.6rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        cursor: none;
+        transition: all 0.35s;
+        font-family: var(--sans);
+      }
+      .nbtn:hover {
+        background: var(--shine);
+        color: var(--void);
+      }
+      #hero {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 0 8vw;
+        overflow: hidden;
+      }
+      .hc {
+        max-width: 640px;
+      }
+      .hpre {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        margin-bottom: 2.2rem;
+        opacity: 0;
+        animation: up 0.9s 0.5s forwards;
+      }
+      .hpre-line {
+        width: 38px;
+        height: 1px;
+        background: var(--shine);
+      }
+      .hpre-txt {
+        font-size: 0.6rem;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        color: var(--shine);
+      }
+      .htitle {
+        font-family: var(--serif);
+        font-size: clamp(4.5rem, 9vw, 9.5rem);
+        line-height: 0.86;
+        font-weight: 300;
+        color: #fff;
+        opacity: 0;
+        animation: up 1.1s 0.7s forwards;
+      }
+      .htitle b {
+        font-weight: 600;
+        color: var(--shine);
+      }
+      .htitle .it {
+        display: block;
+        font-size: clamp(1.2rem, 2.4vw, 2.1rem);
+        font-weight: 300;
+        font-style: italic;
+        color: var(--goldlt);
+        letter-spacing: 0.18em;
+        margin-top: 0.65em;
+      }
+      .hbody {
+        font-size: 0.92rem;
+        line-height: 1.95;
+        color: rgba(200, 234, 249, 0.48);
+        font-weight: 300;
+        max-width: 430px;
+        margin: 2.5rem 0;
+        opacity: 0;
+        animation: up 0.9s 1s forwards;
+      }
+      .hbtns {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        opacity: 0;
+        animation: up 0.9s 1.2s forwards;
+      }
+      .bcta {
+        background: var(--shine);
+        color: var(--void);
+        padding: 0.95rem 2.6rem;
+        font-size: 0.7rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        border: none;
+        cursor: none;
+        font-family: var(--sans);
+        font-weight: 700;
+        transition: all 0.35s;
+        text-decoration: none;
+        display: inline-block;
+        position: relative;
+        overflow: hidden;
+      }
+      .bcta::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.18);
+        transform: translateX(-100%);
+        transition: transform 0.38s;
+      }
+      .bcta:hover::after {
+        transform: translateX(0);
+      }
+      .bcta:hover {
+        transform: translateY(-2px);
+      }
+      .bghst {
+        font-size: 0.68rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: rgba(200, 234, 249, 0.38);
+        text-decoration: none;
+        border-bottom: 1px solid rgba(200, 234, 249, 0.14);
+        padding-bottom: 2px;
+        transition: all 0.3s;
+      }
+      .bghst:hover {
+        color: var(--shine);
+        border-color: var(--shine);
+      }
+      .hscroll {
+        position: absolute;
+        bottom: 2.8rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.55rem;
+        opacity: 0;
+        animation: fadein 0.8s 2s forwards;
+      }
+      .hscroll span {
+        font-size: 0.57rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(200, 234, 249, 0.22);
+      }
+      .hscroll-line {
+        width: 1px;
+        height: 50px;
+        background: linear-gradient(var(--shine), transparent);
+        animation: lp 2s ease-in-out infinite;
+      }
+      @keyframes lp {
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      .mq {
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+        border-top: 1px solid rgba(20, 168, 224, 0.06);
+        border-bottom: 1px solid rgba(20, 168, 224, 0.06);
+        padding: 0.75rem 0;
+        background: rgba(3, 12, 24, 0.55);
+      }
+      .mq-inner {
+        display: flex;
+        gap: 2.5rem;
+        animation: mqa 26s linear infinite;
+        width: max-content;
+      }
+      .mq-t {
+        font-size: 0.58rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: rgba(200, 234, 249, 0.23);
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .mq-d {
+        color: var(--shine);
+        opacity: 0.45;
+        font-size: 0.48rem;
+        flex-shrink: 0;
+      }
+      @keyframes mqa {
+        from {
+          transform: translateX(0);
+        }
+        to {
+          transform: translateX(-50%);
+        }
+      }
+      .sec {
+        position: relative;
+        z-index: 2;
+        padding: 9rem 8vw;
+      }
+      .sec-in {
+        max-width: 1260px;
+        margin: 0 auto;
+      }
+      .ey {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 1.1rem;
+      }
+      .ey-line {
+        width: 30px;
+        height: 1px;
+        background: var(--shine);
+      }
+      .ey-txt {
+        font-size: 0.58rem;
+        letter-spacing: 0.3em;
+        text-transform: uppercase;
+        color: var(--shine);
+      }
+      .stit {
+        font-family: var(--serif);
+        font-size: clamp(2.4rem, 4.8vw, 4.8rem);
+        font-weight: 300;
+        line-height: 1.02;
+        color: #fff;
+      }
+      .stit em {
+        color: var(--shine);
+        font-style: italic;
+      }
+      .ag {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 9rem;
+        align-items: center;
+      }
+      .avis {
+        position: relative;
+        height: 600px;
+      }
+      .sw {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 340px;
+        height: 340px;
+        transform-style: preserve-3d;
+        animation: swa 10s ease-in-out infinite;
+      }
+      @keyframes swa {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) rotateY(-14deg) rotateX(7deg);
+        }
+        25% {
+          transform: translate(-50%, -50%) rotateY(9deg) rotateX(-3deg);
+        }
+        50% {
+          transform: translate(-50%, -50%) rotateY(14deg) rotateX(5deg);
+        }
+        75% {
+          transform: translate(-50%, -50%) rotateY(-6deg) rotateX(-7deg);
+        }
+      }
+      .sl {
+        position: absolute;
+        border-radius: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .sl1 {
+        width: 340px;
+        height: 340px;
+        background: radial-gradient(
+          circle at 36% 32%,
+          rgba(20, 168, 224, 0.2) 0%,
+          rgba(10, 61, 107, 0.14) 42%,
+          rgba(2, 5, 9, 0.82) 100%
+        );
+        border: 1px solid rgba(20, 168, 224, 0.13);
+        box-shadow:
+          0 0 100px rgba(20, 168, 224, 0.09),
+          inset 0 0 70px rgba(20, 168, 224, 0.04);
+      }
+      .sl2 {
+        width: 268px;
+        height: 268px;
+        border: 1px solid rgba(20, 168, 224, 0.06);
+        animation: sp1 15s linear infinite;
+      }
+      .sl3 {
+        width: 200px;
+        height: 200px;
+        border: 1px solid rgba(20, 168, 224, 0.04);
+        animation: sp1 22s linear reverse infinite;
+      }
+      @keyframes sp1 {
+        from {
+          transform: translate(-50%, -50%) rotate(0deg);
+        }
+        to {
+          transform: translate(-50%, -50%) rotate(360deg);
+        }
+      }
+      .sgl {
+        position: absolute;
+        top: 17%;
+        left: 24%;
+        width: 20%;
+        height: 34%;
+        background: linear-gradient(
+          148deg,
+          rgba(255, 255, 255, 0.16),
+          rgba(255, 255, 255, 0.02)
+        );
+        border-radius: 50%;
+        filter: blur(5px);
+      }
+      .slbl {
+        position: absolute;
+        bottom: 16%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: var(--serif);
+        font-size: 1.3rem;
+        font-weight: 300;
+        letter-spacing: 0.28em;
+        color: rgba(20, 168, 224, 0.55);
+        text-transform: uppercase;
+        white-space: nowrap;
+      }
+      .ring {
+        position: absolute;
+        border-radius: 50%;
+        border: 1px solid rgba(20, 168, 224, 0.06);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        animation: rp 4.5s ease-in-out infinite;
+        pointer-events: none;
+      }
+      .ring:nth-child(1) {
+        width: 440px;
+        height: 440px;
+      }
+      .ring:nth-child(2) {
+        width: 520px;
+        height: 520px;
+        animation-delay: -1.5s;
+      }
+      .ring:nth-child(3) {
+        width: 600px;
+        height: 600px;
+        animation-delay: -3s;
+      }
+      @keyframes rp {
+        0%,
+        100% {
+          opacity: 0.3;
+        }
+        50% {
+          opacity: 0.9;
+        }
+      }
+      .fc {
+        position: absolute;
+        background: rgba(3, 12, 24, 0.88);
+        border: 1px solid rgba(20, 168, 224, 0.11);
+        backdrop-filter: blur(22px);
+        padding: 1rem 1.35rem;
+      }
+      .fc-n {
+        font-family: var(--serif);
+        font-size: 2.1rem;
+        font-weight: 600;
+        color: var(--shine);
+        line-height: 1;
+      }
+      .fc-l {
+        font-size: 0.56rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(200, 234, 249, 0.32);
+        margin-top: 0.3rem;
+      }
+      .fca {
+        top: 4%;
+        right: -4%;
+        animation: ff 6s ease-in-out infinite;
+      }
+      .fcb {
+        bottom: 14%;
+        left: -10%;
+        animation: ff 8s ease-in-out reverse infinite;
+      }
+      .fcc {
+        top: 44%;
+        right: -14%;
+        animation: ff 7s 1s ease-in-out infinite;
+      }
+      @keyframes ff {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-12px);
+        }
+      }
+      .atxt p {
+        font-size: 0.88rem;
+        line-height: 1.95;
+        color: rgba(200, 234, 249, 0.44);
+        font-weight: 300;
+        margin-bottom: 1.4rem;
+      }
+      .pills {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.8rem;
+        margin-top: 2.2rem;
+      }
+      .pill {
+        padding: 1.15rem;
+        border: 1px solid rgba(20, 168, 224, 0.08);
+        border-top: 1px solid rgba(20, 168, 224, 0.28);
+        background: rgba(20, 168, 224, 0.02);
+        transition: all 0.4s;
+      }
+      .pill:hover {
+        background: rgba(20, 168, 224, 0.06);
+        border-top-color: var(--shine);
+        transform: translateY(-2px);
+      }
+      .pill-t {
+        font-size: 0.66rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #fff;
+        font-weight: 700;
+        margin-bottom: 0.38rem;
+      }
+      .pill-d {
+        font-size: 0.76rem;
+        color: rgba(200, 234, 249, 0.38);
+        line-height: 1.6;
+      }
+      .ph {
+        text-align: center;
+        max-width: 580px;
+        margin: 0 auto 5rem;
+      }
+      .ph p {
+        font-size: 0.86rem;
+        color: rgba(200, 234, 249, 0.38);
+        line-height: 1.8;
+        margin-top: 0.9rem;
+        font-weight: 300;
+      }
+      .pg {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      .pc {
+        background: rgba(3, 12, 24, 0.72);
+        border: 1px solid rgba(20, 168, 224, 0.07);
+        padding: 2.6rem 2.1rem;
+        position: relative;
+        overflow: hidden;
+        cursor: none;
+        transition:
+          border-color 0.45s,
+          background 0.45s;
+      }
+      .pc::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at var(--px, 50%) var(--py, 50%),
+          rgba(20, 168, 224, 0.07),
+          transparent 60%
+        );
+        opacity: 0;
+        transition: opacity 0.4s;
+      }
+      .pc:hover {
+        border-color: rgba(20, 168, 224, 0.22);
+        background: rgba(10, 38, 72, 0.5);
+      }
+      .pc:hover::after {
+        opacity: 1;
+      }
+      .pc.feat {
+        border-color: rgba(20, 168, 224, 0.16);
+        background: rgba(10, 52, 92, 0.22);
+      }
+      .pc-num {
+        font-family: var(--serif);
+        font-size: 4.5rem;
+        font-weight: 600;
+        color: rgba(20, 168, 224, 0.04);
+        line-height: 1;
+        margin-bottom: 0.4rem;
+      }
+      .pc-ico {
+        width: 48px;
+        height: 48px;
+        border: 1px solid rgba(20, 168, 224, 0.14);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.4rem;
+        transition: all 0.4s;
+      }
+      .pc:hover .pc-ico {
+        border-color: var(--shine);
+        background: rgba(20, 168, 224, 0.07);
+      }
+      .pc-ico svg {
+        width: 20px;
+        height: 20px;
+        stroke: var(--shine);
+        fill: none;
+        stroke-width: 1.5;
+      }
+      .pc-name {
+        font-family: var(--serif);
+        font-size: 1.45rem;
+        font-weight: 400;
+        color: #fff;
+        margin-bottom: 0.28rem;
+      }
+      .pc-sz {
+        font-size: 0.58rem;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        color: var(--shine);
+        margin-bottom: 0.9rem;
+      }
+      .pc-desc {
+        font-size: 0.78rem;
+        color: rgba(200, 234, 249, 0.38);
+        line-height: 1.75;
+        margin-bottom: 1.8rem;
+      }
+      .pc-price {
+        font-family: var(--serif);
+        font-size: 1.7rem;
+        font-weight: 600;
+        color: #fff;
+      }
+      .pc-price small {
+        font-size: 0.68rem;
+        color: rgba(200, 234, 249, 0.32);
+        font-family: var(--sans);
+        font-weight: 300;
+        letter-spacing: 0.08em;
+        margin-left: 0.25rem;
+      }
+      .pc-bar {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(to right, var(--shine), transparent);
+        transition: width 0.5s;
+      }
+      .pc:hover .pc-bar {
+        width: 100%;
+      }
+      .pc-badge {
+        position: absolute;
+        top: 1.4rem;
+        right: 1.4rem;
+        font-size: 0.52rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        background: var(--shine);
+        color: var(--void);
+        padding: 0.28rem 0.75rem;
+        font-weight: 700;
+      }
+      .cg {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr;
+        gap: 8rem;
+        align-items: start;
+      }
+      .csteps {
+        margin-top: 2.2rem;
+      }
+      .cstep {
+        display: flex;
+        gap: 1.4rem;
+        padding: 1.6rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        align-items: flex-start;
+        transition: padding 0.3s;
+      }
+      .cstep:hover {
+        padding-left: 0.5rem;
+      }
+      .csn {
+        font-family: var(--serif);
+        font-size: 3.2rem;
+        font-weight: 600;
+        color: rgba(20, 168, 224, 0.07);
+        flex-shrink: 0;
+        line-height: 1;
+        transition: color 0.3s;
+      }
+      .cstep:hover .csn {
+        color: rgba(20, 168, 224, 0.22);
+      }
+      .cst {
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: #fff;
+        font-weight: 700;
+        margin-bottom: 0.38rem;
+      }
+      .csd {
+        font-size: 0.8rem;
+        color: rgba(200, 234, 249, 0.38);
+        line-height: 1.65;
+      }
+      .perks {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.8rem;
+      }
+      .perk {
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        padding: 0.36rem 0.88rem;
+        border: 1px solid rgba(20, 168, 224, 0.11);
+        color: rgba(200, 234, 249, 0.42);
+        transition: all 0.3s;
+      }
+      .perk:hover {
+        border-color: rgba(20, 168, 224, 0.38);
+        color: var(--shine);
+      }
+      .fg {
+        background: rgba(3, 12, 24, 0.88);
+        border: 1px solid rgba(20, 168, 224, 0.1);
+        padding: 2.6rem;
+        backdrop-filter: blur(32px);
+        position: relative;
+        overflow: hidden;
+      }
+      .fg::before {
+        content: "";
+        position: absolute;
+        top: -40%;
+        right: -20%;
+        width: 280px;
+        height: 280px;
+        background: radial-gradient(
+          circle,
+          rgba(20, 168, 224, 0.04),
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+      .fey {
+        font-size: 0.58rem;
+        letter-spacing: 0.28em;
+        text-transform: uppercase;
+        color: var(--shine);
+        display: block;
+        margin-bottom: 1.8rem;
+      }
+      .fl {
+        display: block;
+        font-size: 0.57rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(200, 234, 249, 0.28);
+        margin-bottom: 0.48rem;
+      }
+      .fi,
+      .fsl,
+      .fta {
+        width: 100%;
+        background: transparent;
+        border: 0;
+        border-bottom: 1px solid rgba(20, 168, 224, 0.11);
+        color: #fff;
+        font-family: var(--sans);
+        padding: 0.72rem 0;
+        font-size: 0.86rem;
+        outline: none;
+        transition: border-color 0.38s;
+        appearance: none;
+        border-radius: 0;
+        margin-bottom: 1.4rem;
+      }
+      .fi:focus,
+      .fsl:focus,
+      .fta:focus {
+        border-bottom-color: var(--shine);
+      }
+      .fi::placeholder {
+        color: rgba(200, 234, 249, 0.18);
+      }
+      .fsl option {
+        background: #030c18;
+        color: #fff;
+      }
+      .fta {
+        resize: vertical;
+        min-height: 84px;
+      }
+      .fr {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.1rem;
+      }
+      .fsb {
+        width: 100%;
+        padding: 1rem;
+        background: transparent;
+        border: 1px solid rgba(20, 168, 224, 0.3);
+        color: var(--shine);
+        font-family: var(--sans);
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
+        text-transform: uppercase;
+        cursor: none;
+        font-weight: 700;
+        position: relative;
+        overflow: hidden;
+        margin-top: 0.4rem;
+      }
+      .fsb::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: var(--shine);
+        transform: translateY(101%);
+        transition: transform 0.42s ease;
+        z-index: 0;
+      }
+      .fsb-t {
+        position: relative;
+        z-index: 1;
+        transition: color 0.42s;
+        display: block;
+      }
+      .fsb:hover::before {
+        transform: translateY(0);
+      }
+      .fsb:hover .fsb-t {
+        color: var(--void);
+      }
+      .fstat {
+        font-size: 0.68rem;
+        text-align: center;
+        letter-spacing: 0.1em;
+        margin-top: 0.75rem;
+        min-height: 1.1rem;
+      }
+      .tgrid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5px;
+        max-width: 1200px;
+        margin: 4rem auto 0;
+      }
+      .tcard {
+        padding: 2.4rem;
+        background: rgba(3, 12, 24, 0.62);
+        border: 1px solid rgba(20, 168, 224, 0.06);
+        position: relative;
+        overflow: hidden;
+        transition: all 0.45s;
+      }
+      .tcard::before {
+        content: '"';
+        font-family: var(--serif);
+        font-size: 7rem;
+        line-height: 0.7;
+        color: rgba(20, 168, 224, 0.05);
+        position: absolute;
+        top: 1rem;
+        left: 1.5rem;
+        pointer-events: none;
+      }
+      .tcard:hover {
+        background: rgba(10, 40, 76, 0.42);
+        border-color: rgba(20, 168, 224, 0.15);
+        transform: translateY(-4px);
+      }
+      .tstars {
+        color: var(--goldlt);
+        font-size: 0.7rem;
+        letter-spacing: 0.12em;
+        margin-bottom: 1.1rem;
+      }
+      .ttext {
+        font-family: var(--serif);
+        font-size: 0.96rem;
+        font-style: italic;
+        color: rgba(200, 234, 249, 0.52);
+        line-height: 1.85;
+        margin-bottom: 1.9rem;
+        position: relative;
+        z-index: 1;
+        font-weight: 300;
+      }
+      .tauth {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+      }
+      .tav {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--water), var(--mid));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: #fff;
+        flex-shrink: 0;
+      }
+      .tnm {
+        font-size: 0.8rem;
+        color: #fff;
+        font-weight: 700;
+      }
+      .trl {
+        font-size: 0.63rem;
+        color: rgba(200, 234, 249, 0.32);
+        letter-spacing: 0.06em;
+        margin-top: 0.08rem;
+      }
+      .cnums {
+        display: flex;
+        justify-content: center;
+        gap: 5.5rem;
+        margin: 4rem 0 3rem;
+      }
+      .cnn {
+        font-family: var(--serif);
+        font-size: 3rem;
+        font-weight: 600;
+        color: var(--shine);
+        line-height: 1;
+      }
+      .cnl {
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: rgba(200, 234, 249, 0.32);
+        margin-top: 0.38rem;
+      }
+      .cities {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.55rem;
+        justify-content: center;
+        max-width: 740px;
+        margin: 0 auto;
+      }
+      .city {
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
+        padding: 0.38rem 0.95rem;
+        border: 1px solid rgba(20, 168, 224, 0.1);
+        color: rgba(200, 234, 249, 0.38);
+        transition: all 0.38s;
+        cursor: default;
+      }
+      .city:hover {
+        border-color: rgba(20, 168, 224, 0.42);
+        color: var(--shine);
+        background: rgba(20, 168, 224, 0.04);
+      }
+      .ctgrid {
+        display: grid;
+        grid-template-columns: 1fr 1.15fr;
+        gap: 8rem;
+        align-items: start;
+      }
+      .ctinf p {
+        font-size: 0.88rem;
+        line-height: 1.9;
+        color: rgba(200, 234, 249, 0.4);
+        font-weight: 300;
+        margin: 1.5rem 0 2.4rem;
+      }
+      .cdt {
+        display: flex;
+        gap: 0.95rem;
+        margin-bottom: 1.7rem;
+        align-items: flex-start;
+      }
+      .cdt:hover .cdt-ico {
+        border-color: var(--shine);
+        background: rgba(20, 168, 224, 0.06);
+      }
+      .cdt-ico {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+        border: 1px solid rgba(20, 168, 224, 0.14);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.35s;
+      }
+      .cdt-ico svg {
+        width: 15px;
+        height: 15px;
+        stroke: var(--shine);
+        fill: none;
+        stroke-width: 1.5;
+      }
+      .cdt-l {
+        font-size: 0.56rem;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: rgba(200, 234, 249, 0.28);
+        margin-bottom: 0.22rem;
+      }
+      .cdt-v {
+        font-size: 0.88rem;
+        color: #fff;
+      }
+      .socs {
+        display: flex;
+        gap: 0.55rem;
+        margin-top: 2.2rem;
+      }
+      .soc {
+        width: 38px;
+        height: 38px;
+        border: 1px solid rgba(20, 168, 224, 0.11);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(200, 234, 249, 0.32);
+        font-size: 0.62rem;
+        text-decoration: none;
+        transition: all 0.35s;
+        letter-spacing: 0.04em;
+      }
+      .soc:hover {
+        border-color: var(--shine);
+        color: var(--shine);
+        background: rgba(20, 168, 224, 0.05);
+      }
+      footer {
+        position: relative;
+        z-index: 2;
+        border-top: 1px solid rgba(20, 168, 224, 0.07);
+        padding: 4.2rem 8vw;
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1fr;
+        gap: 3.5rem;
+        background: rgba(2, 5, 9, 0.75);
+      }
+      .flogo {
+        font-family: var(--serif);
+        font-size: 1.75rem;
+        font-weight: 300;
+        letter-spacing: 0.22em;
+        color: #fff;
+        text-transform: uppercase;
+        margin-bottom: 0.9rem;
+        display: block;
+      }
+      .flogo em {
+        color: var(--shine);
+        font-style: normal;
+      }
+      .ftagline {
+        font-size: 0.76rem;
+        color: rgba(200, 234, 249, 0.28);
+        line-height: 1.8;
+        max-width: 210px;
+        font-weight: 300;
+      }
+      footer h4 {
+        font-size: 0.56rem;
+        letter-spacing: 0.26em;
+        text-transform: uppercase;
+        color: var(--shine);
+        margin-bottom: 1.2rem;
+      }
+      footer ul {
+        list-style: none;
+      }
+      footer li {
+        margin-bottom: 0.58rem;
+      }
+      footer a {
+        font-size: 0.76rem;
+        color: rgba(200, 234, 249, 0.32);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+      footer a:hover {
+        color: #fff;
+      }
+      .fbot {
+        position: relative;
+        z-index: 2;
+        padding: 1.2rem 8vw;
+        border-top: 1px solid rgba(255, 255, 255, 0.04);
+        display: flex;
+        justify-content: space-between;
+        background: rgba(0, 0, 0, 0.5);
+      }
+      .fbot p {
+        font-size: 0.6rem;
+        color: rgba(200, 234, 249, 0.22);
+        letter-spacing: 0.08em;
+      }
+      .rv {
+        opacity: 0;
+        transform: translateY(38px);
+        transition:
+          opacity 0.88s ease,
+          transform 0.88s ease;
+      }
+      .rv.on {
+        opacity: 1;
+        transform: none;
+      }
+      .rvl {
+        opacity: 0;
+        transform: translateX(-46px);
+        transition:
+          opacity 0.88s ease,
+          transform 0.88s ease;
+      }
+      .rvl.on {
+        opacity: 1;
+        transform: none;
+      }
+      .rvr {
+        opacity: 0;
+        transform: translateX(46px);
+        transition:
+          opacity 0.88s ease,
+          transform 0.88s ease;
+      }
+      .rvr.on {
+        opacity: 1;
+        transform: none;
+      }
+      .d1 {
+        transition-delay: 0.12s;
+      }
+      .d2 {
+        transition-delay: 0.26s;
+      }
+      .d3 {
+        transition-delay: 0.4s;
+      }
+      .divider {
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(20, 168, 224, 0.14),
+          transparent
+        );
+        margin: 0 8vw;
+        position: relative;
+        z-index: 2;
+      }
+      @keyframes up {
+        from {
+          opacity: 0;
+          transform: translateY(26px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadein {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+      @media (max-width: 900px) {
+        nav {
+          padding: 1.2rem 4vw;
+        }
+        .nlinks {
+          display: none;
+        }
+        .sec {
+          padding: 5.5rem 4vw;
+        }
+        #hero {
+          padding: 0 5vw;
+        }
+        .ag,
+        .cg,
+        .ctgrid {
+          grid-template-columns: 1fr;
+          gap: 3.5rem;
+        }
+        .avis {
+          height: 320px;
+        }
+        .sw {
+          transform: translate(-50%, -50%) scale(0.72);
+        }
+        .ring:nth-child(1) {
+          width: 300px;
+          height: 300px;
+        }
+        .ring:nth-child(2) {
+          width: 360px;
+          height: 360px;
+        }
+        .ring:nth-child(3) {
+          width: 420px;
+          height: 420px;
+        }
+        .pg,
+        .tgrid {
+          grid-template-columns: 1fr;
+        }
+        .cnums {
+          gap: 2rem;
+          flex-wrap: wrap;
+        }
+        footer {
+          grid-template-columns: 1fr 1fr;
+          gap: 2.2rem;
+          padding: 3rem 4vw;
+        }
+        .fbot {
+          padding: 1rem 4vw;
+          flex-direction: column;
+          gap: 0.4rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="loader">
+      <div class="ld-logo">Zul<span>aa</span>l</div>
+      <div class="ld-bar"><div class="ld-fill" id="lf"></div></div>
+      <div class="ld-pct" id="lp">0%</div>
+    </div>
+    <div id="c1"></div>
+    <div id="c2"></div>
+    <canvas id="cvs"></canvas>
+
+    <nav id="nav">
+      <a href="#" class="nlogo">Zul<em>aa</em>l</a>
+      <ul class="nlinks">
+        <li><a href="#about">Story</a></li>
+        <li><a href="#products">Products</a></li>
+        <li><a href="#custom">Custom</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <button
+        class="nbtn"
+        onclick="
+          document
+            .getElementById('custom')
+            .scrollIntoView({ behavior: 'smooth' })
+        "
+      >
+        Order Now
+      </button>
+    </nav>
+
+    <section id="hero">
+      <div class="hc">
+        <div class="hpre">
+          <div class="hpre-line"></div>
+          <span class="hpre-txt">Pakistan's Premium Water Brand</span>
+        </div>
+        <h1 class="htitle">
+          Zul<b>aa</b>l<span class="it">Crystal Clear. Born Pure.</span>
+        </h1>
+        <p class="hbody">
+          From bespoke custom-labeled bottles for your most important moments,
+          to pure drinking water delivered across Pakistan — crafted with
+          uncompromising care in every single drop.
+        </p>
+        <div class="hbtns">
+          <a href="#products" class="bcta">Explore Products</a
+          ><a href="#custom" class="bghst">Custom Bottles &rarr;</a>
+        </div>
+      </div>
+      <div class="hscroll">
+        <span>Scroll</span>
+        <div class="hscroll-line"></div>
+      </div>
+    </section>
+
+    <div class="mq">
+      <div class="mq-inner">
+        <span class="mq-t">Pure Water</span><span class="mq-d">&middot;</span
+        ><span class="mq-t">Custom Branding</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">Corporate Supply</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">Wedding Bottles</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">PSQCA Certified</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">7-Stage RO Filter</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">Same-Day Delivery</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">Office Dispensers</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">Event Packages</span
+        ><span class="mq-d">&middot;</span><span class="mq-t">Bulk Orders</span
+        ><span class="mq-d">&middot;</span> <span class="mq-t">Pure Water</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">Custom Branding</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">Corporate Supply</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">Wedding Bottles</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">PSQCA Certified</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">7-Stage RO Filter</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">Same-Day Delivery</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">Office Dispensers</span
+        ><span class="mq-d">&middot;</span
+        ><span class="mq-t">Event Packages</span
+        ><span class="mq-d">&middot;</span><span class="mq-t">Bulk Orders</span
+        ><span class="mq-d">&middot;</span>
+      </div>
+    </div>
+
+    <section class="sec" id="about">
+      <div class="sec-in">
+        <div class="ag">
+          <div class="avis rvl">
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="ring"></div>
+            <div class="sw">
+              <div class="sl sl1">
+                <div class="sgl"></div>
+                <div class="slbl">Zulaal</div>
+              </div>
+              <div class="sl sl2"></div>
+              <div class="sl sl3"></div>
+            </div>
+            <div class="fc fca">
+              <div class="fc-n">99.8%</div>
+              <div class="fc-l">Purity Score</div>
+            </div>
+            <div class="fc fcb">
+              <div class="fc-n">500K+</div>
+              <div class="fc-l">Bottles Delivered</div>
+            </div>
+            <div class="fc fcc">
+              <div class="fc-n">18</div>
+              <div class="fc-l">Cities Covered</div>
+            </div>
+          </div>
+          <div class="atxt rvr">
+            <div class="ey">
+              <div class="ey-line"></div>
+              <span class="ey-txt">Our Story</span>
+            </div>
+            <h2 class="stit" style="margin-top: 0.8rem">
+              Water as it was<br /><em>meant</em> to be
+            </h2>
+            <p style="margin-top: 1.8rem">
+              Zulaal — meaning crystal-clear water in Arabic — was born from a
+              simple belief: every Pakistani deserves water that is genuinely,
+              verifiably pure. Not just labelled pure. Actually pure.
+            </p>
+            <p>
+              We built a brand that holds itself to the highest standard.
+              Quarterly PCRWR testing. 7-stage reverse osmosis purification. A
+              custom bottle service that turns hydration into a statement piece.
+            </p>
+            <div class="pills">
+              <div class="pill">
+                <div class="pill-t">7-Stage RO</div>
+                <div class="pill-d">
+                  Multi-layer reverse osmosis with UV sterilisation.
+                </div>
+              </div>
+              <div class="pill">
+                <div class="pill-t">Custom Labels</div>
+                <div class="pill-d">
+                  Your design printed and delivered in 72 hours.
+                </div>
+              </div>
+              <div class="pill">
+                <div class="pill-t">PSQCA Registered</div>
+                <div class="pill-d">
+                  Quarterly government quality monitoring passed.
+                </div>
+              </div>
+              <div class="pill">
+                <div class="pill-t">Nationwide</div>
+                <div class="pill-d">
+                  Same-day delivery across 18 major cities.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section
+      class="sec"
+      id="products"
+      style="
+        background: linear-gradient(
+          to bottom,
+          var(--void),
+          rgba(4, 22, 36, 0.35),
+          var(--void)
+        );
+      "
+    >
+      <div class="sec-in">
+        <div class="ph rv">
+          <div class="ey" style="justify-content: center">
+            <div class="ey-line"></div>
+            <span class="ey-txt">Our Range</span>
+            <div class="ey-line"></div>
+          </div>
+          <h2 class="stit" style="margin-top: 0.9rem">
+            Every size.<br /><em>Every need.</em>
+          </h2>
+          <p>
+            From personal carry bottles to 19-litre office dispensers — and
+            fully custom-branded options for your brand or event.
+          </p>
+        </div>
+        <div class="pg">
+          <div class="pc rv d1">
+            <div class="pc-num">01</div>
+            <div class="pc-ico">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C9 2 7 5 7 9v10a2 2 0 004 0v-4h2v4a2 2 0 004 0V9c0-4-2-7-5-7z"
+                />
+              </svg>
+            </div>
+            <div class="pc-name">Personal</div>
+            <div class="pc-sz">250ml — 500ml</div>
+            <div class="pc-desc">
+              Slim and lightweight. Your everyday companion for school, gym, and
+              commute.
+            </div>
+            <div class="pc-price">Rs. 25 <small>per bottle</small></div>
+            <div class="pc-bar"></div>
+          </div>
+          <div class="pc feat rv d2">
+            <div class="pc-badge">Best Seller</div>
+            <div class="pc-num">02</div>
+            <div class="pc-ico">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12 2C9 2 7 5 7 9v10a2 2 0 004 0v-4h2v4a2 2 0 004 0V9c0-4-2-7-5-7z"
+                />
+              </svg>
+            </div>
+            <div class="pc-name">Standard</div>
+            <div class="pc-sz">1 Litre — 1.5 Litre</div>
+            <div class="pc-desc">
+              Our flagship. Ideal for home, travel, dining tables and daily
+              family use.
+            </div>
+            <div class="pc-price">Rs. 55 <small>per bottle</small></div>
+            <div class="pc-bar"></div>
+          </div>
+          <div class="pc rv d3">
+            <div class="pc-num">03</div>
+            <div class="pc-ico">
+              <svg viewBox="0 0 24 24">
+                <rect x="7" y="3" width="10" height="18" rx="2" />
+                <path d="M9 3V1h6v2" />
+              </svg>
+            </div>
+            <div class="pc-name">Family</div>
+            <div class="pc-sz">5 Litre</div>
+            <div class="pc-desc">
+              Easy-grip handle, resealable cap. The household companion that
+              lasts all day.
+            </div>
+            <div class="pc-price">Rs. 120 <small>per bottle</small></div>
+            <div class="pc-bar"></div>
+          </div>
+          <div class="pc rv d1">
+            <div class="pc-num">04</div>
+            <div class="pc-ico">
+              <svg viewBox="0 0 24 24">
+                <rect x="5" y="2" width="14" height="20" rx="2" />
+                <circle cx="12" cy="14" r="3" />
+                <path d="M10 6h4" />
+              </svg>
+            </div>
+            <div class="pc-name">Office Dispenser</div>
+            <div class="pc-sz">19 Litre</div>
+            <div class="pc-desc">
+              Built for offices, schools, and restaurants. Weekly subscription
+              available.
+            </div>
+            <div class="pc-price">Rs. 350 <small>per jar</small></div>
+            <div class="pc-bar"></div>
+          </div>
+          <div class="pc rv d2">
+            <div class="pc-badge">Popular</div>
+            <div class="pc-num">05</div>
+            <div class="pc-ico">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z" />
+              </svg>
+            </div>
+            <div class="pc-name">Custom Label</div>
+            <div class="pc-sz">Any Size</div>
+            <div class="pc-desc">
+              Your logo, your colors, your event. Min 200 bottles. Free design
+              service included.
+            </div>
+            <div class="pc-price">Custom <small>pricing</small></div>
+            <div class="pc-bar"></div>
+          </div>
+          <div class="pc rv d3">
+            <div class="pc-num">06</div>
+            <div class="pc-ico">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M20 7H4a2 2 0 00-2 2v6a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"
+                />
+                <path d="M12 12v.01M8 12v.01M16 12v.01" />
+              </svg>
+            </div>
+            <div class="pc-name">Bulk Supply</div>
+            <div class="pc-sz">500+ Units</div>
+            <div class="pc-desc">
+              Dedicated account manager and flexible delivery scheduling for
+              large businesses.
+            </div>
+            <div class="pc-price">Call Us <small>for rates</small></div>
+            <div class="pc-bar"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="sec" id="custom">
+      <div class="sec-in">
+        <div class="cg">
+          <div class="rvl">
+            <div class="ey">
+              <div class="ey-line"></div>
+              <span class="ey-txt">Custom Orders</span>
+            </div>
+            <h2 class="stit" style="margin-top: 0.8rem">
+              Your brand.<br /><em>Our water.</em>
+            </h2>
+            <p
+              style="
+                font-size: 0.86rem;
+                color: rgba(200, 234, 249, 0.4);
+                line-height: 1.9;
+                margin-top: 1.4rem;
+                font-weight: 300;
+              "
+            >
+              Perfect for weddings, corporate events, product launches, hotels,
+              and restaurants. We print your design and deliver bottles that
+              leave a lasting impression.
+            </p>
+            <div class="csteps">
+              <div class="cstep">
+                <div class="csn">01</div>
+                <div>
+                  <div class="cst">Submit Your Design</div>
+                  <div class="csd">
+                    Send your logo and artwork — or let our design team create
+                    it for you, completely free.
+                  </div>
+                </div>
+              </div>
+              <div class="cstep">
+                <div class="csn">02</div>
+                <div>
+                  <div class="cst">Approve the Proof</div>
+                  <div class="csd">
+                    Digital mockup within 24 hours. You approve, we go straight
+                    to production.
+                  </div>
+                </div>
+              </div>
+              <div class="cstep">
+                <div class="csn">03</div>
+                <div>
+                  <div class="cst">Receive Your Order</div>
+                  <div class="csd">
+                    Branded bottles delivered to your address within 72 hours of
+                    final approval.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="perks">
+              <span class="perk">Min. 200 bottles</span
+              ><span class="perk">Full-wrap printing</span
+              ><span class="perk">72hr turnaround</span
+              ><span class="perk">Free design</span
+              ><span class="perk">All sizes</span
+              ><span class="perk">Nationwide delivery</span>
+            </div>
+          </div>
+          <div class="fg rvr">
+            <span class="fey">Request a Quote</span>
+            <div class="fr">
+              <div>
+                <label class="fl">Full Name</label
+                ><input
+                  type="text"
+                  class="fi"
+                  placeholder="Ahmed Khan"
+                  id="cn"
+                />
+              </div>
+              <div>
+                <label class="fl">Phone</label
+                ><input
+                  type="text"
+                  class="fi"
+                  placeholder="+92 300 0000000"
+                  id="cp"
+                />
+              </div>
+            </div>
+            <label class="fl">Email</label
+            ><input
+              type="email"
+              class="fi"
+              placeholder="you@company.com"
+              id="ce"
+            />
+            <label class="fl">Order Type</label
+            ><select class="fsl" id="ct">
+              <option>Custom Label Bottles</option>
+              <option>Corporate Supply</option>
+              <option>Wedding / Event</option>
+              <option>Office Dispensers</option>
+              <option>Retail Bulk Order</option>
+            </select>
+            <div class="fr">
+              <div>
+                <label class="fl">Bottle Size</label
+                ><select class="fsl" id="cs">
+                  <option>250ml</option>
+                  <option>500ml</option>
+                  <option selected>1 Litre</option>
+                  <option>1.5 Litre</option>
+                  <option>5 Litre</option>
+                  <option>19 Litre</option>
+                </select>
+              </div>
+              <div>
+                <label class="fl">Quantity</label
+                ><input
+                  type="number"
+                  class="fi"
+                  placeholder="500"
+                  id="cq"
+                  min="1"
+                />
+              </div>
+            </div>
+            <label class="fl">Requirements</label
+            ><textarea
+              class="fta"
+              placeholder="Event date, deadline, special requirements..."
+              id="cm"
+            ></textarea>
+            <button class="fsb" onclick="subQ()">
+              <span class="fsb-t">Submit Quote Request</span>
+            </button>
+            <div class="fstat" id="cs2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section
+      class="sec"
+      id="testimonials"
+      style="
+        background: linear-gradient(
+          135deg,
+          rgba(4, 22, 36, 0.5) 0%,
+          var(--void) 100%
+        );
+      "
+    >
+      <div class="sec-in">
+        <div class="rv" style="text-align: center">
+          <div class="ey" style="justify-content: center">
+            <div class="ey-line"></div>
+            <span class="ey-txt">Testimonials</span>
+            <div class="ey-line"></div>
+          </div>
+          <h2 class="stit" style="margin-top: 0.9rem">
+            Trusted by <em>thousands</em>
+          </h2>
+        </div>
+        <div class="tgrid">
+          <div class="tcard rv d1">
+            <div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="ttext">
+              "We ordered 2,000 custom-labeled bottles for our product launch.
+              The quality was stunning and delivery was perfectly on time. Every
+              guest was genuinely impressed."
+            </p>
+            <div class="tauth">
+              <div class="tav">SA</div>
+              <div>
+                <div class="tnm">Sara Akhtar</div>
+                <div class="trl">Marketing Director, Karachi</div>
+              </div>
+            </div>
+          </div>
+          <div class="tcard rv d2">
+            <div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="ttext">
+              "Six months of office supply and not a single missed delivery.
+              19-litre jars every Monday without exception. Genuinely the best
+              water service I have used in Lahore."
+            </p>
+            <div class="tauth">
+              <div class="tav">MR</div>
+              <div>
+                <div class="tnm">Muhammad Raza</div>
+                <div class="trl">Office Manager, Lahore</div>
+              </div>
+            </div>
+          </div>
+          <div class="tcard rv d3">
+            <div class="tstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="ttext">
+              "The custom bottles for my daughter's wedding were absolutely
+              beautiful. The label design team was so patient and the final
+              result exceeded all of our expectations."
+            </p>
+            <div class="tauth">
+              <div class="tav">FQ</div>
+              <div>
+                <div class="tnm">Fatima Qureshi</div>
+                <div class="trl">Event Host, Islamabad</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="sec" id="coverage" style="text-align: center">
+      <div class="sec-in">
+        <div class="rv">
+          <div class="ey" style="justify-content: center">
+            <div class="ey-line"></div>
+            <span class="ey-txt">Delivery Network</span>
+            <div class="ey-line"></div>
+          </div>
+          <h2 class="stit" style="margin-top: 0.9rem">
+            We deliver <em>everywhere</em>
+          </h2>
+        </div>
+        <div class="cnums rv">
+          <div>
+            <div class="cnn">18</div>
+            <div class="cnl">Cities Covered</div>
+          </div>
+          <div>
+            <div class="cnn">500K+</div>
+            <div class="cnl">Deliveries Done</div>
+          </div>
+          <div>
+            <div class="cnn">2,400+</div>
+            <div class="cnl">Active Clients</div>
+          </div>
+          <div>
+            <div class="cnn">4.9&#9733;</div>
+            <div class="cnl">Customer Rating</div>
+          </div>
+        </div>
+        <div class="cities rv">
+          <span class="city">Karachi</span><span class="city">Lahore</span
+          ><span class="city">Islamabad</span
+          ><span class="city">Rawalpindi</span
+          ><span class="city">Faisalabad</span><span class="city">Multan</span
+          ><span class="city">Hyderabad</span><span class="city">Peshawar</span
+          ><span class="city">Quetta</span><span class="city">Sialkot</span
+          ><span class="city">Gujranwala</span><span class="city">Sukkur</span
+          ><span class="city">Bahawalpur</span
+          ><span class="city">Abbottabad</span><span class="city">Larkana</span
+          ><span class="city">Sahiwal</span><span class="city">Mirpur AJK</span
+          ><span class="city">Gilgit</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="sec" id="contact">
+      <div class="sec-in">
+        <div class="ctgrid">
+          <div class="ctinf rvl">
+            <div class="ey">
+              <div class="ey-line"></div>
+              <span class="ey-txt">Get In Touch</span>
+            </div>
+            <h2 class="stit" style="margin-top: 0.8rem">
+              Let's talk <em>water.</em>
+            </h2>
+            <p>
+              Questions about pricing, custom orders, or bulk supply? Our team
+              responds within 2 hours during business hours.
+            </p>
+            <div class="cdt">
+              <div class="cdt-ico">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 010 1.17 2 2 0 012 .01h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <div class="cdt-l">Phone / WhatsApp</div>
+                <div class="cdt-v">+92 321 000 0000</div>
+              </div>
+            </div>
+            <div class="cdt">
+              <div class="cdt-ico">
+                <svg viewBox="0 0 24 24">
+                  <path
+                    d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                  />
+                  <polyline points="22,6 12,13 2,6" />
+                </svg>
+              </div>
+              <div>
+                <div class="cdt-l">Email</div>
+                <div class="cdt-v">hello@zulaal.pk</div>
+              </div>
+            </div>
+            <div class="cdt">
+              <div class="cdt-ico">
+                <svg viewBox="0 0 24 24">
+                  <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </div>
+              <div>
+                <div class="cdt-l">Head Office</div>
+                <div class="cdt-v">Karachi, Pakistan</div>
+              </div>
+            </div>
+            <div class="socs">
+              <a class="soc" href="#">ig</a><a class="soc" href="#">fb</a
+              ><a class="soc" href="#">in</a><a class="soc" href="#">wa</a>
+            </div>
+          </div>
+          <div class="fg rvr">
+            <span class="fey">Send a Message</span>
+            <label class="fl">Name</label
+            ><input
+              type="text"
+              class="fi"
+              placeholder="Your full name"
+              id="mn"
+            />
+            <label class="fl">Email or Phone</label
+            ><input
+              type="text"
+              class="fi"
+              placeholder="How to reach you"
+              id="mc"
+            />
+            <label class="fl">Subject</label
+            ><select class="fsl" id="ms">
+              <option>General Inquiry</option>
+              <option>Custom Order</option>
+              <option>Pricing &amp; Bulk</option>
+              <option>Complaint / Feedback</option>
+              <option>Partnership</option>
+            </select>
+            <label class="fl">Message</label
+            ><textarea
+              class="fta"
+              style="min-height: 115px"
+              placeholder="How can we help?"
+              id="mm"
+            ></textarea>
+            <button class="fsb" onclick="subM()">
+              <span class="fsb-t">Send Message</span>
+            </button>
+            <div class="fstat" id="ms2"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div>
+        <span class="flogo">Zul<em>aa</em>l</span>
+        <p class="ftagline">
+          Pakistan's premium water brand — pure, certified, and delivered with
+          care across the nation.
+        </p>
+      </div>
+      <div>
+        <h4>Products</h4>
+        <ul>
+          <li><a href="#">250ml Personal</a></li>
+          <li><a href="#">1L Standard</a></li>
+          <li><a href="#">5L Family</a></li>
+          <li><a href="#">19L Dispenser</a></li>
+          <li><a href="#">Custom Bottles</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Quality</a></li>
+          <li><a href="#">Coverage</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Support</h4>
+        <ul>
+          <li><a href="#">Track Order</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms</a></li>
+        </ul>
+      </div>
+    </footer>
+    <div class="fbot">
+      <p>&copy; 2025 Zulaal Water. All rights reserved. PSQCA Registered.</p>
+      <p>Made with care in Pakistan &#127477;&#127472;</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        addDoc,
+        serverTimestamp,
+      } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+      var cfg = {
+        apiKey: "YOUR_API_KEY",
+        authDomain: "YOUR_PROJECT.firebaseapp.com",
+        projectId: "YOUR_PROJECT_ID",
+        storageBucket: "YOUR_PROJECT.appspot.com",
+        messagingSenderId: "YOUR_SENDER_ID",
+        appId: "YOUR_APP_ID",
+      };
+      try {
+        var app = initializeApp(cfg);
+        var db = getFirestore(app);
+        window._db = db;
+        window._col = collection;
+        window._add = addDoc;
+        window._ts = serverTimestamp;
+      } catch (e) {
+        console.warn("Firebase not configured:", e.message);
+      }
+    </script>
+
+    <script>
+      // LOADER
+      (function () {
+        var p = 0,
+          fill = document.getElementById("lf"),
+          pct = document.getElementById("lp");
+        var t = setInterval(function () {
+          p += Math.random() * 14 + 3;
+          if (p >= 100) {
+            p = 100;
+            clearInterval(t);
+            setTimeout(function () {
+              document.getElementById("loader").classList.add("gone");
+            }, 350);
+          }
+          fill.style.width = Math.min(p, 100) + "%";
+          pct.textContent = Math.floor(Math.min(p, 100)) + "%";
+        }, 55);
+      })();
+
+      // CURSOR
+      var c1 = document.getElementById("c1"),
+        c2 = document.getElementById("c2");
+      var mx = 0,
+        my = 0,
+        rx = 0,
+        ry = 0;
+      document.addEventListener("mousemove", function (e) {
+        mx = e.clientX;
+        my = e.clientY;
+        c1.style.left = mx + "px";
+        c1.style.top = my + "px";
+      });
+      (function loop() {
+        rx += (mx - rx) * 0.09;
+        ry += (my - ry) * 0.09;
+        c2.style.left = rx + "px";
+        c2.style.top = ry + "px";
+        requestAnimationFrame(loop);
+      })();
+      document
+        .querySelectorAll("a,button,.pc,.tcard,.city,.pill,.perk,.soc,.cdt,.fc")
+        .forEach(function (el) {
+          el.addEventListener("mouseenter", function () {
+            document.body.classList.add("big");
+          });
+          el.addEventListener("mouseleave", function () {
+            document.body.classList.remove("big");
+          });
+        });
+
+      // NAV
+      window.addEventListener("scroll", function () {
+        document
+          .getElementById("nav")
+          .classList.toggle("stuck", window.scrollY > 70);
+      });
+
+      // REVEAL
+      var io = new IntersectionObserver(
+        function (es) {
+          es.forEach(function (e) {
+            if (e.isIntersecting) e.target.classList.add("on");
+          });
+        },
+        { threshold: 0.07 },
+      );
+      document.querySelectorAll(".rv,.rvl,.rvr").forEach(function (el) {
+        io.observe(el);
+      });
+
+      // PRODUCT 3D TILT
+      document.querySelectorAll(".pc").forEach(function (card) {
+        card.addEventListener("mousemove", function (e) {
+          var r = card.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width - 0.5;
+          var y = (e.clientY - r.top) / r.height - 0.5;
+          card.style.transform =
+            "perspective(900px) rotateY(" +
+            x * 14 +
+            "deg) rotateX(" +
+            -y * 9 +
+            "deg) translateZ(8px)";
+          card.style.setProperty("--px", (x + 0.5) * 100 + "%");
+          card.style.setProperty("--py", (y + 0.5) * 100 + "%");
+        });
+        card.addEventListener("mouseleave", function () {
+          card.style.transform =
+            "perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0px)";
+        });
+      });
+
+      // THREE.JS
+      (function () {
+        var canvas = document.getElementById("cvs");
+        var renderer = new THREE.WebGLRenderer({
+          canvas: canvas,
+          antialias: true,
+          alpha: true,
+        });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x000000, 0);
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(
+          60,
+          window.innerWidth / window.innerHeight,
+          0.1,
+          1000,
+        );
+        camera.position.set(0, 0, 5);
+        window.addEventListener("resize", function () {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // Main sphere
+        var sph = new THREE.Mesh(
+          new THREE.SphereGeometry(1.8, 64, 64),
+          new THREE.MeshStandardMaterial({
+            color: 0x0a3d6b,
+            metalness: 0.15,
+            roughness: 0.06,
+            transparent: true,
+            opacity: 0.55,
+          }),
+        );
+        sph.position.set(3.2, -0.2, 0);
+        scene.add(sph);
+        var wsph = new THREE.Mesh(
+          new THREE.SphereGeometry(1.82, 32, 32),
+          new THREE.MeshBasicMaterial({
+            color: 0x14a8e0,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.038,
+          }),
+        );
+        wsph.position.copy(sph.position);
+        scene.add(wsph);
+        var isph = new THREE.Mesh(
+          new THREE.SphereGeometry(1.75, 32, 32),
+          new THREE.MeshBasicMaterial({
+            color: 0x0e6aad,
+            transparent: true,
+            opacity: 0.14,
+            side: THREE.BackSide,
+          }),
+        );
+        isph.position.copy(sph.position);
+        scene.add(isph);
+
+        // Tori
+        var t1 = new THREE.Mesh(
+          new THREE.TorusGeometry(2.4, 0.01, 8, 80),
+          new THREE.MeshBasicMaterial({
+            color: 0x14a8e0,
+            transparent: true,
+            opacity: 0.07,
+            wireframe: true,
+          }),
+        );
+        t1.position.copy(sph.position);
+        t1.rotation.x = Math.PI / 3;
+        scene.add(t1);
+        var t2 = new THREE.Mesh(
+          new THREE.TorusGeometry(2.7, 0.008, 8, 80),
+          new THREE.MeshBasicMaterial({
+            color: 0xb8924a,
+            transparent: true,
+            opacity: 0.05,
+            wireframe: true,
+          }),
+        );
+        t2.position.copy(sph.position);
+        t2.rotation.x = Math.PI / 2;
+        t2.rotation.y = Math.PI / 5;
+        scene.add(t2);
+
+        // Icosahedron
+        var ico = new THREE.Mesh(
+          new THREE.IcosahedronGeometry(1.1, 1),
+          new THREE.MeshStandardMaterial({
+            color: 0x0e6aad,
+            metalness: 0.2,
+            roughness: 0.1,
+            transparent: true,
+            opacity: 0.18,
+          }),
+        );
+        ico.position.set(-3.5, 1.2, -1);
+        scene.add(ico);
+        var icoW = new THREE.Mesh(
+          new THREE.IcosahedronGeometry(1.13, 1),
+          new THREE.MeshBasicMaterial({
+            color: 0x14a8e0,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.09,
+          }),
+        );
+        icoW.position.copy(ico.position);
+        scene.add(icoW);
+
+        // Crystals - all plain numbers, no unicode minus
+        var cpos = [
+          [2.5, 2.2, -2],
+          [-4.0, -1.5, -1],
+          [4.5, -2.0, -2],
+          [-2.5, 2.5, -1.5],
+          [0.0, -3.0, -2],
+        ];
+        var crystals = [];
+        for (var ci = 0; ci < cpos.length; ci++) {
+          var sz = 0.15 + Math.random() * 0.25;
+          var cm = new THREE.Mesh(
+            new THREE.OctahedronGeometry(sz, 0),
+            new THREE.MeshStandardMaterial({
+              color: ci % 2 === 0 ? 0x14a8e0 : 0xb8924a,
+              metalness: 0.3,
+              roughness: 0.2,
+              transparent: true,
+              opacity: 0.3 + Math.random() * 0.3,
+            }),
+          );
+          cm.position.set(cpos[ci][0], cpos[ci][1], cpos[ci][2]);
+          cm.userData = {
+            ph: Math.random() * Math.PI * 2,
+            sp: 0.4 + Math.random() * 0.4,
+          };
+          scene.add(cm);
+          crystals.push(cm);
+        }
+
+        // Particles
+        var pN = 1200,
+          pPos = new Float32Array(pN * 3),
+          pCol = new Float32Array(pN * 3);
+        for (var i = 0; i < pN; i++) {
+          var pr = 4 + Math.random() * 8,
+            pth = Math.random() * Math.PI * 2,
+            pph = Math.acos(2 * Math.random() - 1);
+          pPos[i * 3] = pr * Math.sin(pph) * Math.cos(pth);
+          pPos[i * 3 + 1] =
+            pr * Math.sin(pph) * Math.sin(pth) * (Math.random() * 0.6 + 0.4);
+          pPos[i * 3 + 2] = pr * Math.cos(pph);
+          var gld = Math.random() > 0.82;
+          pCol[i * 3] = gld ? 0.72 : 0.05;
+          pCol[i * 3 + 1] = gld ? 0.57 : 0.66;
+          pCol[i * 3 + 2] = gld ? 0.29 : 0.88;
+        }
+        var pGeo = new THREE.BufferGeometry();
+        pGeo.setAttribute("position", new THREE.BufferAttribute(pPos, 3));
+        pGeo.setAttribute("color", new THREE.BufferAttribute(pCol, 3));
+        var pts = new THREE.Points(
+          pGeo,
+          new THREE.PointsMaterial({
+            size: 0.024,
+            vertexColors: true,
+            transparent: true,
+            opacity: 0.68,
+            sizeAttenuation: true,
+          }),
+        );
+        scene.add(pts);
+
+        var p2N = 400,
+          p2Pos = new Float32Array(p2N * 3);
+        for (var j = 0; j < p2N; j++) {
+          p2Pos[j * 3] = (Math.random() - 0.5) * 16;
+          p2Pos[j * 3 + 1] = (Math.random() - 0.5) * 10;
+          p2Pos[j * 3 + 2] = (Math.random() - 0.5) * 8;
+        }
+        var p2Geo = new THREE.BufferGeometry();
+        p2Geo.setAttribute("position", new THREE.BufferAttribute(p2Pos, 3));
+        var pts2 = new THREE.Points(
+          p2Geo,
+          new THREE.PointsMaterial({
+            size: 0.016,
+            color: 0x14a8e0,
+            transparent: true,
+            opacity: 0.22,
+            sizeAttenuation: true,
+          }),
+        );
+        scene.add(pts2);
+
+        // Lights
+        scene.add(new THREE.AmbientLight(0x0a1628, 0.85));
+        var pl1 = new THREE.PointLight(0x14a8e0, 2.5, 12);
+        pl1.position.set(2, 2, 3);
+        scene.add(pl1);
+        var pl2 = new THREE.PointLight(0xb8924a, 1.2, 8);
+        pl2.position.set(-3, -1, 2);
+        scene.add(pl2);
+        var pl3 = new THREE.PointLight(0x0e6aad, 1.8, 10);
+        pl3.position.set(0, 3, -2);
+        scene.add(pl3);
+
+        var scY = 0,
+          mX = 0,
+          mY = 0,
+          tX = 0,
+          tY = 0;
+        window.addEventListener("scroll", function () {
+          scY = window.scrollY;
+        });
+        document.addEventListener("mousemove", function (e) {
+          mX = (e.clientX / window.innerWidth - 0.5) * 2;
+          mY = -(e.clientY / window.innerHeight - 0.5) * 2;
+        });
+
+        var tt = 0;
+        (function anim() {
+          requestAnimationFrame(anim);
+          tt += 0.008;
+          tX += (mX * 0.3 - tX) * 0.05;
+          tY += (mY * 0.2 - tY) * 0.05;
+          sph.rotation.y = tt * 0.18 + tX * 0.4;
+          sph.rotation.x = Math.sin(tt * 0.12) * 0.06 + tY * 0.2;
+          sph.position.y = -0.2 + Math.sin(tt * 0.6) * 0.08;
+          wsph.rotation.copy(sph.rotation);
+          wsph.position.y = sph.position.y;
+          isph.rotation.y = sph.rotation.y * 0.8;
+          isph.position.y = sph.position.y;
+          t1.rotation.z = tt * 0.12;
+          t1.rotation.x = Math.PI / 3 + Math.sin(tt * 0.2) * 0.1;
+          t2.rotation.z = -tt * 0.08;
+          t2.rotation.y = tt * 0.1;
+          ico.rotation.x = tt * 0.2;
+          ico.rotation.y = tt * 0.15;
+          ico.position.y = 1.2 + Math.sin(tt * 0.5) * 0.15;
+          icoW.rotation.copy(ico.rotation);
+          icoW.position.copy(ico.position);
+          for (var k = 0; k < crystals.length; k++) {
+            crystals[k].rotation.x += 0.008;
+            crystals[k].rotation.y += 0.006;
+            crystals[k].position.y +=
+              Math.sin(tt + crystals[k].userData.ph) *
+              crystals[k].userData.sp *
+              0.003;
+          }
+          pts.rotation.y = tt * 0.018;
+          pts.rotation.x = tt * 0.006;
+          pts2.rotation.y = -tt * 0.012;
+          var sp = scY * 0.0008;
+          camera.position.y = -sp * 1.5;
+          sph.position.x = 3.2 - sp * 0.5;
+          ico.position.x = -3.5 + sp * 0.3;
+          pl1.position.x = 2 + Math.sin(tt * 0.4) * 1.5;
+          pl1.position.y = 2 + Math.cos(tt * 0.3) * 1;
+          pl2.position.x = -3 + Math.cos(tt * 0.35) * 1;
+          renderer.render(scene, camera);
+        })();
+      })();
+
+      // FORMS
+      function subQ() {
+        var btn = document.querySelector("#custom .fsb-t"),
+          st = document.getElementById("cs2");
+        var d = {
+          name: document.getElementById("cn").value,
+          phone: document.getElementById("cp").value,
+          email: document.getElementById("ce").value,
+          type: document.getElementById("ct").value,
+          size: document.getElementById("cs").value,
+          qty: document.getElementById("cq").value,
+          msg: document.getElementById("cm").value,
+          status: "new",
+          createdAt: window._ts ? window._ts() : new Date().toISOString(),
+        };
+        if (!d.name || !d.phone) {
+          st.style.color = "#ef4444";
+          st.textContent = "Please fill in your name and phone.";
+          return;
+        }
+        btn.textContent = "Sending...";
+        function ok() {
+          btn.textContent = "Request Sent \u2713";
+          st.style.color = "#22c55e";
+          st.textContent = "We will contact you within 2 hours. Thank you!";
+        }
+        function err() {
+          btn.textContent = "Submit Quote Request";
+          st.style.color = "#ef4444";
+          st.textContent = "Error — please call us directly.";
+        }
+        if (window._db) {
+          window
+            ._add(window._col(window._db, "quote_requests"), d)
+            .then(ok)
+            .catch(err);
+        } else {
+          setTimeout(ok, 800);
+        }
+      }
+      function subM() {
+        var btn = document.querySelector("#contact .fsb-t"),
+          st = document.getElementById("ms2");
+        var d = {
+          name: document.getElementById("mn").value,
+          contact: document.getElementById("mc").value,
+          subject: document.getElementById("ms").value,
+          msg: document.getElementById("mm").value,
+          status: "new",
+          createdAt: window._ts ? window._ts() : new Date().toISOString(),
+        };
+        if (!d.name || !d.contact) {
+          st.style.color = "#ef4444";
+          st.textContent = "Please fill in your name and contact.";
+          return;
+        }
+        btn.textContent = "Sending...";
+        function ok() {
+          btn.textContent = "Sent \u2713";
+          st.style.color = "#22c55e";
+          st.textContent = "We will get back to you within 2 hours!";
+        }
+        function err() {
+          btn.textContent = "Send Message";
+          st.style.color = "#ef4444";
+          st.textContent = "Error — please email us directly.";
+        }
+        if (window._db) {
+          window
+            ._add(window._col(window._db, "messages"), d)
+            .then(ok)
+            .catch(err);
+        } else {
+          setTimeout(ok, 800);
+        }
+      }
+    </script>
+  </body>
+</html>
